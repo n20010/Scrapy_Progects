@@ -63,9 +63,9 @@ DOWNLOAD_DELAY = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'kinokuniya.pipelines.KinokuniyaPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'kinokuniya.pipelines.CheckItemPipeLine': 100,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
