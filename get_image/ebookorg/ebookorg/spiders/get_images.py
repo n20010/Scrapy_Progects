@@ -11,7 +11,7 @@ from scrapy.loader import ItemLoader
 class GetImagesSpider(CrawlSpider):
     name = 'get_images'
     allowed_domains = ['e-hentai.org']
-    start_urls = ['https://e-hentai.org/g/1356161/63994d1f6b/']
+    start_urls = ['https://e-hentai.org/g/1813545/ce50f39ae8/']
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths=('//div[@class="gdtm"]/div/a')), callback='parse_item', follow=False),
