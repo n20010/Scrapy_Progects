@@ -38,6 +38,7 @@ class ComputerBooksSpider(CrawlSpider):
         loader.add_xpath('price', '//span[@class="sale_price"]/text()')
         loader.add_xpath('publisher', '//a[contains(@href, "publisher-key")]/text()')
         loader.add_xpath('isbn', '//li[@itemprop="identifier"]/text()')
+        loader.add_value('image_urls', [response.urljoin(response.xpath('//img[@itemprop="image"]/@src').get())])
 
         yield loader.load_item()
         #yield {

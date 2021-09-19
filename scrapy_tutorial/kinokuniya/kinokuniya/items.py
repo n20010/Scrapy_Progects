@@ -11,6 +11,11 @@ def strip_yen(element):
         return element.replace('¥', '')
     return element
 
+def strip_tokka(element):
+    if element:
+        return element.replace('特価 ', '')
+    return element
+
 
 def strip_comma(element):
     if element:
@@ -41,7 +46,7 @@ class BookItem(scrapy.Item):
         output_processor = TakeFirst()
     )
     price = scrapy.Field(
-        input_processor = MapCompose(strip_yen, strip_comma, convert_int),
+        input_processor = MapCompose(strip_tokka, strip_yen, strip_comma, convert_int),
         output_processor = TakeFirst()
     )
     publisher = scrapy.Field(
@@ -50,4 +55,7 @@ class BookItem(scrapy.Item):
     isbn = scrapy.Field(
         input_processor = MapCompose(strip_isbn, convert_int),
         output_processor = TakeFirst()
+    )
+
+    image_urls = scrapy.Field(
     )

@@ -1,3 +1,4 @@
 /BooksToScrape/.scrapy
 /yodobashi/.scrapy
 /kinokuniya/.scrapy
+/kinokuniya/kinokuniya/book_images

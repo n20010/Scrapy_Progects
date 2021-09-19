@@ -65,7 +65,12 @@ DOWNLOAD_DELAY = 3
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'kinokuniya.pipelines.CheckItemPipeLine': 100,
+    #'scrapy.pipelines.images.ImagesPipeline': 400
+    'kinokuniya.pipelines.customImagePipeline': 400
 }
+
+IMAGES_STORE = r'C:\Users\satapom\PROGECTS\scrapy\scrapy_tutorial\kinokuniya\kinokuniya\book_images'
+IMAGES_URIS_FIELD = 'image_urls'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
