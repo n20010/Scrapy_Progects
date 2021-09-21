@@ -2,3 +2,4 @@
 /yodobashi/.scrapy
 /kinokuniya/.scrapy
 /kinokuniya/kinokuniya/book_images
+/google/.scrapy
