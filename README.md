@@ -13,17 +13,17 @@ This repository include some my scrapy projects.<br>
 1. Get [Anaconda enviroment](https://www.anaconda.com/products/individual#Downloads)
 2. Create virtual enviroment in Anaconda
     >You shuld select python3 version 3.8.<br>
-    >2021/09 scrapy is not available on python3 ver3.9
+    >2021/09 scrapy is not available on python3 ver3.9.
 3. Install some component need execute Scrapy in anaconda virtual enviroment
 
     ```Terminal
     pip install -r requirements.txt
     ```
 4. [Install VScode](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) in your local enviroment and add python extensions
-5. clone this repository and move to project you need
-    >If you use get_images project, you shuld to check IMAGES_STORE path in settings.py<br>
-    >Images save to IMAGES_STORE, so it's need to chenge obey your enviroment<br>
-6. Use this command, spider is execute.
+5. Clone this repository and move to project you need
+    >If you use get_images project, you shuld to check IMAGES_STORE path in settings.py.<br>
+    >Images will save to IMAGES_STORE, so it's need to chenge obey your enviroment.<br>
+6. Use this command, spider is execute
 
     ```Terminal
     scrapy crawl <spider name you need>
