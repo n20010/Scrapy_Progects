@@ -32,16 +32,35 @@ This repository include some my scrapy projects.<br>
 # Main commands
   ## bench
   Execute simple benchmark test
+  ```Terminal
+  scrapy bench
+  ```
+
   ## startproject
   Make new scrapy project
+  ```Terminal
+  scrapy startproject <project name>
+  ```
+
   ## genspider
-  Make new spider on currnt project
+  Make new spider on currnt project<br>
+  >(When type URL, remove 'https://' and last '/' is the best way)
+  ```Terminal
+  scrapy genspider (-t template name) <spider name> URL
+  ```
+
   ## crawl
   Execute spider
+  ```Terminal
+  scrapy crawl <spider name>
+  ```
+
   ## shell
   Execute scrapy shell<br>
   You can check Xpath, CSS etc...<br>
-
+  ```Terminal
+  scrapy shell
+  ```
 # Spetial Thanks
 - [【3日で学べる】PythonでWebスクレイピング・クローリングを極めよう！（Scrapy、Selenium編）](https://www.udemy.com/course/python-web-scraping-with-scrapy/)
 - [Scrapy Official Documents](https://docs.scrapy.org/en/latest/)
