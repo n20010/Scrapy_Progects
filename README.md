@@ -3,7 +3,7 @@ This repository include some my scrapy projects.<br>
 [scrapy_tutorial](https://github.com/n20010/scrapy_projects/tree/main/scrapy_tutorial) is a archive repository I learned about scrapy.<br>
 [get_image](https://github.com/n20010/scrapy_projects/tree/main/get_image) include some projects what is scrape images from actual website.<br>
 
-# What is scrapy
+# What is Scrapy
 ## [OFFICIALSITE](https://scrapy.org)
 >An open source and collaborative framework<br> 
 >for extracting the data you need from websites.<br>
