@@ -20,7 +20,7 @@ class GetImagesSpider(CrawlSpider):
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths=('//div[@class="gdtm"]/div/a')), callback='parse_item', follow=False),
-        Rule(LinkExtractor(restrict_xpaths=('//table[@class="ptb"]/tbody/tr/td[last()]/a')), follow=True)
+        Rule(LinkExtractor(restrict_xpaths=('(//td[@class="ptds"]/following-sibling::td)[1]/a')), follow=True)
     )
 
     def parse_item(self, response):
