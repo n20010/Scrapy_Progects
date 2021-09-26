@@ -1,10 +1,10 @@
 import scrapy
 from time import sleep
 import re
-import pprint
 import logging
 from ebookorg.items import EbookorgItem
 from scrapy.loader import ItemLoader
+#import pprint
 
 class GetImagesFromSearchSpider(scrapy.Spider):
     input_raw = input("add url: ")
@@ -15,10 +15,11 @@ class GetImagesFromSearchSpider(scrapy.Spider):
     allowed_domains = [input_domains]
     start_urls = [input_raw]
 
+    global titles
+    titles = {}
+
     def parse(self, response):
         index_list = response.xpath('//div[@class="glink"]/../@href').getall()
-        global titles
-        titles = {}
         for images_page in index_list:
             yield response.follow(url=images_page, callback=self.parse_images)
 
@@ -30,12 +31,10 @@ class GetImagesFromSearchSpider(scrapy.Spider):
     def parse_images(self, response):
         language = response.xpath('(//td[@class="gdt2"])[4]/text()').get()
         self.wait_time
+        title_main = self.normalize_title(response.xpath('//h1[@id="gj"]/text()').get())
         if re.match(r'Japanese.*$', language):
-            pp = pprint.PrettyPrinter(indent=4)
             title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
-            title_main = self.normalize_title(response.xpath('//h1[@id="gj"]/text()').get())
             titles[title_key] = title_main
-            pp.pprint(titles)
             images = response.xpath('//div[@class="gdtm"]/div/a/@href').getall()
 
             print(f'[*] {title_main} is Japanese Page')
@@ -46,8 +45,14 @@ class GetImagesFromSearchSpider(scrapy.Spider):
             if next_images:
                 self.wait_time
                 yield response.follow(url=next_images, callback=self.parse_images)
+        else:
+            print(f'[-] {title_main} is not Japanese Page')
+            print(f'[-] URL: {response.url}')
+
     
     def get_image(self, response):
+        print('[*] get_image progress now')
+        print(f'[*] target URL: {response.url}')
         self.wait_time
         title_key = self.normalize_title(response.xpath('//div[@id="i1"]/h1/text()').get())
         loader = ItemLoader(item=EbookorgItem(), response = response)
@@ -57,8 +62,8 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         
 
     def wait_time(self):
-        sleep(4)
+        sleep(3)
     
     def normalize_title(self, title):
-        print(title)
+        print(f'[*] in normalize progress: {title}')
         return title
