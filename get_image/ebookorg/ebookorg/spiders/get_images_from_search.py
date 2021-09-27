@@ -10,11 +10,10 @@ class GetImagesFromSearchSpider(scrapy.Spider):
     name = 'get_images_from_search'
 
     # Get target url and normalize it for scrapy here
-    input_raw = input("add url: ")
-    input_start_urls = input_raw.replace('https://', '')
-    input_domains = re.sub('org.+$', 'org', input_start_urls)
+    start_url = input("add url: ")
+    input_domains = re.sub('org.+$', 'org', start_url.replace('https://', ''))
     allowed_domains = [input_domains]
-    start_urls = [input_raw]
+    start_urls = [start_url]
 
     # We will add true title this assosiative array later
     # This assosiative array is used for a file path 

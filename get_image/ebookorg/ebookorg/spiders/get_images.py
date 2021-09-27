@@ -3,20 +3,19 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from time import sleep
 import re
-#import logging
+# import logging
 
 from ebookorg.items import EbookorgItem
 from scrapy.loader import ItemLoader
 
 
 class GetImagesSpider(CrawlSpider):
-    input_raw = input("add url: ")
-    input_start_urls = input_raw.replace('https://', '')
-    input_domains = re.sub('org.+$', 'org', input_start_urls)
+    start_url = input("add url: ")
+    input_domains = re.sub('org.+$', 'org', start_url.replace('https://', ''))
 
     name = 'get_images'
     allowed_domains = [input_domains]
-    start_urls = [input_raw]
+    start_urls = [start_url]
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths=('//div[@class="gdtm"]/div/a')), callback='parse_item', follow=False),
