@@ -3,7 +3,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from time import sleep
 import re
-import logging
+#import logging
 
 from ebookorg.items import EbookorgItem
 from scrapy.loader import ItemLoader
@@ -23,15 +23,13 @@ class GetImagesSpider(CrawlSpider):
         Rule(LinkExtractor(restrict_xpaths=('(//td[@class="ptds"]/following-sibling::td)[1]/a')), follow=True)
     )
 
-    def parse_item(self, response):
-        #logging.info(response.url)
+    def parse_start_url(self, response):
+        global title_main
+        title_main = response.xpath('//h1[@id="gj"]/text()').get()
 
-        sleep(5)
+    def parse_item(self, response):
+        sleep(3)
         loader = ItemLoader(item=EbookorgItem(), response = response)
-        loader.add_xpath('title', '//h1/text()')
+        loader.add_value('title', title_main)
         loader.add_value('img_url', response.xpath('//img[@id="img"]/@src').get())
         yield loader.load_item()
-
-        #yield {
-        #    "img_url": response.xpath('//img[@id="img"]/@src').get(),
-        #}
