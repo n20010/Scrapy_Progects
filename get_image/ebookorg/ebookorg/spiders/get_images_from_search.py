@@ -43,6 +43,7 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         for images_page in index_list:
             if images_page not in downloaded_url_list:
                 print('[*] This page has not downloaded yet')
+                print(f'[*] target URL: {response.url}')
                 self.current_url_to_downloaded_list(images_page)
                 yield response.follow(url=images_page, callback=self.parse_images)
             else:
