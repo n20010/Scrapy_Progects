@@ -41,14 +41,9 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         # Here process implement to go to images pages, and next main page  
         index_list = response.xpath('//div[@class="glink"]/../@href').getall()
         for images_page in index_list:
-            if images_page not in downloaded_url_list:
                 print('[*] This page has not downloaded yet')
                 print(f'[*] target URL: {response.url}')
-                self.current_url_to_downloaded_list(images_page)
                 yield response.follow(url=images_page, callback=self.parse_images)
-            else:
-                print('[-] This page has already downloaded. Skip.')
-                print(f'[-] target URL: {response.url}')
 
         next = response.xpath('(//td[@class="ptds"]/following-sibling::td)[1]/a/@href').get()
         if next:
@@ -62,16 +57,24 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         title_main = self.normalize_title(response.xpath('//h1[@id="gj"]/text()').get())
         # If this page is for Japanese, we get image URLs from this page
         if re.match(r'Japanese.*$', language):
-            title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
-            # Correct title can't get from next image page, so we add it to title assosiative directory here
-            titles[title_key] = title_main
-            images = response.xpath('//div[@class="gdtm"]/div/a/@href').getall()
+            if response.url not in downloaded_url_list:
+                title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
+                # Correct title can't get from next image page, so we add it to title assosiative directory here
+                titles[title_key] = title_main
+                images = response.xpath('//div[@class="gdtm"]/div/a/@href').getall()
 
-            print(f'[*] {title_main} is Japanese Page')
-            print(f'[*] URL: {response.url}')
-            # We got some embetted URLs from this page's images. so move there to get download URL for big size image
-            for image in images:
-                yield response.follow(url=image, callback=self.get_image)
+                print(f'[*] {title_main} is Japanese Page')
+                print(f'[*] URL: {response.url}')
+                # We got some embetted URLs from this page's images. so move there to get download URL for big size image
+                for image in images:
+                    yield response.follow(url=image, callback=self.get_image)
+                self.current_url_to_downloaded_list(response.url)
+
+
+            else:
+                print('[-] This page has already downloaded. Skip.')
+                print(f'[-] target URL: {response.url}')
+
             # If this page include some pages for image, we move there and callback this method to get all images
             next_images = response.xpath('(//td[@class="ptds"]/following-sibling::td)[1]/a/@href').get()
             if next_images:
