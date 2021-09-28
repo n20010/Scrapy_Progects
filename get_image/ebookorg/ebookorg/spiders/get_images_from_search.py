@@ -41,8 +41,6 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         # Here process implement to go to images pages, and next main page  
         index_list = response.xpath('//div[@class="glink"]/../@href').getall()
         for images_page in index_list:
-                print('[*] This page has not downloaded yet')
-                print(f'[*] target URL: {response.url}')
                 yield response.follow(url=images_page, callback=self.parse_images)
 
         next = response.xpath('(//td[@class="ptds"]/following-sibling::td)[1]/a/@href').get()
@@ -58,6 +56,8 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         # If this page is for Japanese, we get image URLs from this page
         if re.match(r'Japanese.*$', language):
             if response.url not in downloaded_url_list:
+                print('[*] This page has not downloaded yet')
+                print(f'[*] target URL: {response.url}')
                 title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
                 # Correct title can't get from next image page, so we add it to title assosiative directory here
                 titles[title_key] = title_main
