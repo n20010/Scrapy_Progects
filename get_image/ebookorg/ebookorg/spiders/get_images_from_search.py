@@ -55,25 +55,16 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         title_main = self.normalize_title(response.xpath('//h1[@id="gj"]/text()').get())
         # If this page is for Japanese, we get image URLs from this page
         if re.match(r'Japanese.*$', language):
-            if response.url not in downloaded_url_list:
-                print('[*] This page has not downloaded yet')
-                print(f'[*] target URL: {response.url}')
-                title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
-                # Correct title can't get from next image page, so we add it to title assosiative directory here
-                titles[title_key] = title_main
-                images = response.xpath('//div[@class="gdtm"]/div/a/@href').getall()
+            title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
+            # Correct title can't get from next image page, so we add it to title assosiative directory here
+            titles[title_key] = title_main
+            images = response.xpath('//div[@class="gdtm"]/div/a/@href').getall()
 
-                print(f'[*] {title_main} is Japanese Page')
-                print(f'[*] URL: {response.url}')
-                # We got some embetted URLs from this page's images. so move there to get download URL for big size image
-                for image in images:
-                    yield response.follow(url=image, callback=self.get_image)
-                self.current_url_to_downloaded_list(response.url)
-
-
-            else:
-                print('[-] This page has already downloaded. Skip.')
-                print(f'[-] target URL: {response.url}')
+            print(f'[*] {title_main} is Japanese Page')
+            print(f'[*] URL: {response.url}')
+            # We got some embetted URLs from this page's images. so move there to get download URL for big size image
+            for image in images:
+                yield response.follow(url=image, callback=self.get_image)
 
             # If this page include some pages for image, we move there and callback this method to get all images
             next_images = response.xpath('(//td[@class="ptds"]/following-sibling::td)[1]/a/@href').get()
@@ -86,6 +77,9 @@ class GetImagesFromSearchSpider(scrapy.Spider):
 
     
     def get_image(self, response):
+        if response.url not in downloaded_url_list:
+            print('[*] This page has not downloaded yet')
+            print(f'[*] target URL: {response.url}')
             # add collect title and image download URL to Item Loader
             # Item Loader send to Item Pipeline
             # Item Pipeline get image file from added URL and save it our local computer
@@ -97,6 +91,10 @@ class GetImagesFromSearchSpider(scrapy.Spider):
             loader.add_value('title', titles[title_key])
             loader.add_value('img_url',  response.xpath('//img[@id="img"]/@src').get())
             yield loader.load_item()
+            self.current_url_to_downloaded_list(response.url)
+        else:
+            print('[-] This page has already downloaded. Skip.')
+            print(f'[-] target URL: {response.url}')
         
 
     def current_url_to_downloaded_list(self, current_url):

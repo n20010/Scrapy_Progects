@@ -68,7 +68,7 @@ ITEM_PIPELINES = {
     'ebookorg.pipelines.customImagePipeline': 400
 }
 
-IMAGES_STORE = r"C:\Users\n20010\Desktop\PROGECTS\scrapy_projects\get_image\images_downloaded"
+IMAGES_STORE = r"C:\Users\satapom\PROGECTS\scrapy\get_image\images_downloaded"
 IMAGES_URLS_FIELD = 'img_url'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
