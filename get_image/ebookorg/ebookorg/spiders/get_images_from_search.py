@@ -22,7 +22,7 @@ class GetImagesFromSearchSpider(scrapy.Spider):
 
     global url_file_name
     file_name = input('[*] Add URL file name you need: ')
-    url_file_name = f'../url_files/{file_name}.txt'
+    url_file_name = f'ebookorg/url_files/{file_name}.txt'
 
     global downloaded_url_list
     try:

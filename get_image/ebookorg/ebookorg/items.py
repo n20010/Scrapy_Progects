@@ -6,6 +6,7 @@
 import scrapy
 
 from itemloaders.processors import TakeFirst, MapCompose, Join
+import re
 
 def strip_windows_fileFormat(element):
     if element:
@@ -18,6 +19,8 @@ def strip_windows_fileFormat(element):
         strip7 = strip6.replace('<', ' ')
         strip8 = strip7.replace('>', ' ')
         strip9 = strip8.replace('"', ' ')
+        if re.match(r'^.+\s$', strip9):
+            return strip9.rstrip()
         return strip9
     return element
 
