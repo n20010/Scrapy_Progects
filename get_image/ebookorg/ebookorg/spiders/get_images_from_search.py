@@ -53,6 +53,9 @@ class GetImagesFromSearchSpider(scrapy.Spider):
         language = response.xpath('(//td[@class="gdt2"])[4]/text()').get()
         self.wait_time
         title_main = self.normalize_title(response.xpath('//h1[@id="gj"]/text()').get())
+        if title_main == None:
+            title_main = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
+        
         # If this page is for Japanese, we get image URLs from this page
         if re.match(r'Japanese.*$', language):
             title_key = self.normalize_title(response.xpath('//h1[@id="gn"]/text()').get())
