@@ -20,10 +20,14 @@ This repository include some my scrapy projects.<br>
     pip install -r requirements.txt
     ```
 4. [Install VScode](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) in your local enviroment and add python extensions
-5. Clone this repository and move to project you need
+
+5. Make *downloadfoloder_path.txt* on same hierarchy README.md
+    > You need contents on downloadfolder_path.txt is only filepath<br>
+    > that is to your folder it will save download files.
+6. Clone this repository and move to project you need
     >If you use get_images project, you shuld to check IMAGES_STORE path in settings.py.<br>
     >Images will save to IMAGES_STORE, so it's need to chenge obey your enviroment.<br>
-6. Use this command, spider is execute
+7. Use this command, spider is execute
 
     ```Terminal
     scrapy crawl <spider name you need>
