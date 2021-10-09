@@ -25,8 +25,6 @@ This repository include some my scrapy projects.<br>
     > You need contents on downloadfolder_path.txt is only filepath<br>
     > that is to your folder it will save download files.
 6. Clone this repository and move to project you need
-    >If you use get_images project, you shuld to check IMAGES_STORE path in settings.py.<br>
-    >Images will save to IMAGES_STORE, so it's need to chenge obey your enviroment.<br>
 7. Use this command, spider is execute
 
     ```Terminal
