@@ -7,7 +7,7 @@ from scrapy.loader import ItemLoader
 #import pprint
 
 class GetImagesFromSearchSpider(scrapy.Spider):
-    name = 'get_images_from_search'
+    name = 'get_allimages'
 
     # Get target url and normalize it for scrapy here
     start_url = input("[*] Add url: ")
