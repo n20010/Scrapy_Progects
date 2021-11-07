@@ -25,6 +25,8 @@ class GetImagesSpider(CrawlSpider):
     def parse_start_url(self, response):
         global title_main
         title_main = response.xpath('//h1[@id="gj"]/text()').get()
+        if title_main == None:
+            title_main = response.xpath('//h1[@id="gn"]/text()').get()
 
     def parse_item(self, response):
         sleep(3)
